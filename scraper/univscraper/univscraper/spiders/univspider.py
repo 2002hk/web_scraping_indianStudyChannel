@@ -20,20 +20,20 @@ class UnivspiderSpider(scrapy.Spider):
             yield response.follow(univ_url,callback=self.parse_univ_page)
         
         # it moves to the next page using the below xpath
-        next_page=response.xpath("//span[@id='ContentPlaceHolder1_lblUniversities']/table[2]//descendant::a[position()=1]/@href").get()
+        next_page=response.xpath("//span[@id='ContentPlaceHolder1_lblUniversities']/table[2]//descendant::a/@href")
 
-        '''for query in range(0,len(next_page)-1):
-            link=query.get()
+        for query in range(0,2):
+            link=next_page[query].get()
             next_page_url='https://www.indiastudychannel.com'+link
-            yield response.follow(next_page_url,self.parse)'''
+            yield response.follow(next_page_url,self.parse)
         
-        
-        if next_page is not None:
+        '''if next_page is not None:
             next_page_url='https://www.indiastudychannel.com'+next_page
             yield response.follow(next_page_url,self.parse)
         next_page_3="/universities/index.aspx?stateid=13&PageNumber=3"
         next_page_url='https://www.indiastudychannel.com'+ next_page_3
-        yield response.follow(next_page_url,self.parse)
+        yield response.follow(next_page_url,self.parse)'''
+        
         
 
     def parse_univ_page(self,response):
